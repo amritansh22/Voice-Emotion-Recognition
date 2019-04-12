@@ -1,50 +1,8 @@
-#This files has some necessary
-#commented parts.
-
-
-
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
-
-
-
-
-#!pip install librosa
-
-
 import numpy as np
 import pandas as pd
 import librosa
 import matplotlib.pyplot as plt
 
-
-
-
-
-
-
-
-"""
-from matplotlib.pyplot import specgram
-import keras
-from keras.preprocessing import sequence
-from keras.models import Sequential
-from keras.layers import Dense, Embedding
-from keras.layers import LSTM
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
-from keras.layers import Input, Flatten, Dropout, Activation
-from keras.layers import Conv1D, MaxPooling1D, AveragePooling1D
-from keras.models import Model
-from keras.callbacks import ModelCheckpoint
-from sklearn.metrics import confusion_matrix
-"""
 """
 d = []
 i=1
@@ -83,16 +41,8 @@ j=j+1
 """
 test
 """
-
-
-
-
 df = pd.DataFrame(columns=['feature'])
-
-
 bookmark=0
-
-
 for i in range(12480):
  y, sample_rate = librosa.load('Actor_01/d (' +str(i+1)+ ').wav')
  sample_rate = np.array(sample_rate)
@@ -101,26 +51,7 @@ for i in range(12480):
  
  df.loc[bookmark] = [feature]
  bookmark=bookmark+1
-
- 
-
-  
-  
-  
-  
-  
-  
-  
 df3 = pd.DataFrame(df['feature'].values.tolist())
-
-
-
-
-#df3 = pd.DataFrame(df['feature'].values.tolist())
-
-
-
-
 
 """
 #data agumentation
@@ -352,26 +283,11 @@ ipd.Audio(data, rate=sample_rate)
 y, sample_rate = librosa.load('drive/My Drive/dd/du (200).wav')
 data = librosa.effects.pitch_shift(y, sample_rate, n_steps=1)
 ipd.Audio(y, rate=sample_rate)
-
 data agumentation 2 
-
 """
-  
-  
 
-
-
-
-
-
-
-
-#i=1
-#j=1
 dfs = pd.DataFrame(columns=['feature'])
 bookmark=0
-
-
 for i in range(1920):
  y, sample_rate = librosa.load('asdfgh/a (' +str(i+1)+ ').wav')
  sample_rate = np.array(sample_rate)
@@ -381,28 +297,11 @@ for i in range(1920):
  #j = j+1
  dfs.loc[bookmark] = [feature]
  bookmark=bookmark+1 
- 
-
-    
-    
-  
 df4 = pd.DataFrame(dfs['feature'].values.tolist())
-
-
-
-
-
-
-
-
 df3 = df3.assign(label = 0)
 df4 = df4.assign(label = 1)
-
-
 df8 = df3.append(df4)[df4.columns.tolist()]
-
 df8=df8.fillna(0)
-
 from sklearn.utils import shuffle
 df8 = shuffle(df8)
 
@@ -410,218 +309,77 @@ df8 = shuffle(df8)
 newdf1 = np.random.rand(len(df8)) < 0.5
 train = df8[newdf1]
 test = df8[~newdf1]
-
-
 trainfeatures = train.iloc[:, :-1]
-
 trainlabel = train.iloc[:, -1:]
 testfeatures = test.iloc[:, :-1]
 testlabel = test.iloc[:, -1:]
-
 X_train = np.array(trainfeatures)
 y_train = np.array(trainlabel)
 X_test = np.array(testfeatures)
 y_test = np.array(testlabel)
-
 x_traincnn =np.expand_dims(X_train, axis=2)
 x_testcnn= np.expand_dims(X_test, axis=2)
 """
+
 X = df8.iloc[:,:-1]
-
 y = df8.iloc[:,-1:]
-
-# Splitting the dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
-
-
-
-
-# Feature Scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-
 #print(X_train.shape)
 #print(X_test.shape)
 
-
 x_traincnn =np.expand_dims(X_train, axis=2)
-
 x_testcnn =np.expand_dims(X_test, axis=2)
-
-
 
 #print(X.shape)
 #print(y.shape)
 #print(x_traincnn.shape)
 #print(x_testcnn.shape)
 
-
-
-"""
-"""
-"""
-model = Sequential()
-
-model.add(Conv1D(256, 5,padding='same',
-                 input_shape=(216,1)))
-model.add(Activation('relu'))
-model.add(Conv1D(128, 5,padding='same'))
-model.add(Activation('relu'))
-model.add(Dropout(0.1))
-model.add(MaxPooling1D(pool_size=(8)))
-model.add(Conv1D(128, 5,padding='same',))
-model.add(Activation('relu'))
-#model.add(Conv1D(128, 5,padding='same',))
-#model.add(Activation('relu'))
-#model.add(Conv1D(128, 5,padding='same',))
-#model.add(Activation('relu'))
-#model.add(Dropout(0.2))
-model.add(Conv1D(128, 5,padding='same',))
-model.add(Activation('relu'))
-model.add(Flatten())
-model.add(Dense(10))
-model.add(Activation('softmax'))
-opt = keras.optimizers.rmsprop(lr=0.00001, decay=1e-6)
-
-#from sklearn.model_selection import train_test_split
-
-#X_train,X_test,Y_train,Y_test = train_test_split(d,dd,test_size = 0.2,random_state =0)
-"""
-
-
-
-
-"""
-import keras 
-from keras.models import Sequential
-from keras.layers import Dense
-
-classifier = Sequential()
-
-classifier.add(Dense(output_dim = 6, init = 'uniform',activation = 'relu',input_dim = 3473))
-
-"""
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-
 from keras.optimizers import SGD
 opt = SGD(lr=1e-8)
 
+#ANN
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-
 keras.layers.Dropout(0.5, noise_shape=None, seed=None)
-
-# Initialising the ANN
 classifier = Sequential()
-
-
-# Adding the input layer and the first hidden layer
 classifier.add(Dense(output_dim = 110, init = 'uniform', activation = 'relu', input_dim = 220))
-
-# Adding the second hidden layer
 #classifier.add(Dense(output_dim = 110, init = 'uniform', activation = 'relu'))
-
-# Adding the third hidden layer
 #classifier.add(Dense(output_dim = 110, init = 'uniform', activation = 'relu'))
-
-# Adding the output layer
 classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
-
-
-# Compiling the ANN
 classifier.compile(optimizer = opt, loss = 'binary_crossentropy', metrics = ['accuracy'])
-
-# Fitting the ANN to the Training set
 classifier.fit(X_train, y_train, batch_size = 56, nb_epoch = 50)
-
-
-# Predicting the Test set results
 y_pred = classifier.predict(X_test)
 y_pred = (y_pred > 0.5)
-
-
-
-# Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
-print(cm)
 
-"""
-
-
-
-#"""
-
-
-
-
-
+#CNN
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Conv1D, MaxPooling1D,Dropout
 from keras.layers import Flatten
-
-
 model = Sequential()
-
 model.add(Conv1D(110,input_shape = (275, 1),kernel_size = 114,activation = 'relu'))
-
 model.add(MaxPooling1D(pool_size = (2)))
-
 model.add(Flatten())
-
 #model.add(Dropout(rate=0.5))
-
 model.add(Dense(output_dim = 220,activation = 'relu'))
 model.add(Dropout(rate=0.1))
-
 model.add(Dense(output_dim = 1,activation = 'sigmoid'))
 model.add(Dropout(rate=0.1))
-
-
 model.compile(optimizer = 'adam',loss = 'binary_crossentropy' ,metrics = ['accuracy'])
-              
 model.summary()
 cnnhistory=model.fit(x_traincnn, y_train, batch_size=128, epochs=4, validation_data=(x_testcnn, y_test))
-
-
 y_pred = model.predict(x_testcnn)
 y_pred = (y_pred > 0.5)
-
-from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
-
 plt.plot(cnnhistory.history['loss'])
 plt.plot(cnnhistory.history['val_loss'])
 plt.title('model loss')
@@ -629,6 +387,5 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
